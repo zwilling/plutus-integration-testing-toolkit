@@ -9,4 +9,4 @@ export CARDANO_MAGIC=1097911063
 
 # Path to the socket connecting cardano-cli to the cardano-node
 # For simplicity, I recommend using the socket provided by the node of the Daedalus wallet for the testnet
-export CARDANO_SOCKET=~/.local/share/Daedalus/testnet/cardano-node.socket
+export CARDANO_NODE_SOCKET_PATH=~/.local/share/Daedalus/testnet/cardano-node.socket

@@ -24,5 +24,5 @@ source venv/bin/activate
 3. 
 
 ## Test cases
-- integration-toolkit/test-environment: checks whether your environment config looks correct
+- integration-toolkit/test-environment: checks whether your environment config looks correct and if the cli can query the testnet tip
 - 

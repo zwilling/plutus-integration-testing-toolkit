@@ -11,7 +11,7 @@ class TestkitEnvironment:
 
     @property
     def socket(self):
-        return self.__env.get("CARDANO_SOCKET")
+        return self.__env.get("CARDANO_NODE_SOCKET_PATH")
 
     @property
     def magic(self):
