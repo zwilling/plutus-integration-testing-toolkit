@@ -78,6 +78,15 @@ class TestAlwaysSucceeds(unittest.TestCase):
         self.assertTrue(success, format_shell_error(command, message))
         self.assertTrue(os.path.exists(self.script_address))
 
+    def test_sign_and_submitt(self):
+        command = build_command(self.env.cardano_cli, "transaction", "sign",
+                                "--tx-body-file", self.tx_file,
+                                "--signing-key-file", self.env.wallet_sign_key,
+                                "--testnet-magic", self.env.magic,
+                                "--out-file", self.tx_signed_file)
+        success, message = run_command(command)
+        self.assertTrue(success, format_shell_error(command, message))
+        self.assertTrue(os.path.exists(self.tx_signed_file))
 
 
 if __name__ == '__main__':

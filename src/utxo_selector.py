@@ -22,7 +22,6 @@ def get_utxo_in_wallet(env):
     # TODO: smarter selection than just using the first one
     # parse while handling multiple whitespaces
     first_utxo_line = re.sub(" +", " ", lines[2]).split(" ")
-    print(first_utxo_line)
     utxo = first_utxo_line[0] + "#" + first_utxo_line[1]
     return utxo
 
