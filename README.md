@@ -7,5 +7,9 @@ This repository was started as part of the [Plutus Pioneer Capstone challenge #2
 :memo: Add 5m outline video
 
 ## Installation
+1. Configure the variables in **environment-setup.sh** to tell the toolkit where to find your cardano-node, testnet magic, etc.
+2. 
 
 ## Usage and Examples
+
+## Test cases
