@@ -5,7 +5,7 @@ import subprocess
 from src.environment import TestkitEnvironment
 
 
-class MyTestCase(unittest.TestCase):
+class TestEnvironmentSetup(unittest.TestCase):
     def setUp(self) -> None:
         self.env = TestkitEnvironment()
 
@@ -14,7 +14,6 @@ class MyTestCase(unittest.TestCase):
             self.assertIsNotNone(field, "Should be able to load environment variables")
 
     def test_socket_available(self):
-        print("socket", self.env.socket)
         self.assertTrue(os.path.exists(self.env.socket), "Your socket config is not pointing to a running cardano-node")
 
     def test_cli_available(self):
@@ -25,6 +24,10 @@ class MyTestCase(unittest.TestCase):
             # check if it is executable
             result = subprocess.check_output([cli, "--version"])
             self.assertTrue("cardano-cli" in str(result), cli + "should be available")
+
+    def test_node_connection(self):
+        result = subprocess.check_output([self.env.cardano_cli, "query", "tip", "--testnet-magic", self.env.magic])
+        self.assertTrue("slot" in str(result), "Cardano cli should be able to query the tip")
 
 
 if __name__ == '__main__':

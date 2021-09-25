@@ -1,0 +1,3 @@
+[submodule "src/examples/Alonzo-testnet"]
+	path = src/examples/Alonzo-testnet
+	url = git@github.com:input-output-hk/Alonzo-testnet.git
