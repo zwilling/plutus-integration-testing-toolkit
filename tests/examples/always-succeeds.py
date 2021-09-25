@@ -56,7 +56,7 @@ class TestAlwaysSucceeds(unittest.TestCase):
         self.assertTrue(success, format_shell_error(command, message))
         self.assertTrue(os.path.exists(self.script_address))
 
-    def test_tx_creation(self):
+    def test_creation_of_tx(self):
         utxo = get_utxo_in_wallet(self.env)
         query_pparams(self.env)
         # create datum hash
@@ -78,12 +78,21 @@ class TestAlwaysSucceeds(unittest.TestCase):
         self.assertTrue(success, format_shell_error(command, message))
         self.assertTrue(os.path.exists(self.script_address))
 
-    def test_sign_and_submitt(self):
+    def test_sign_and_submit(self):
+        # sign
         command = build_command(self.env.cardano_cli, "transaction", "sign",
                                 "--tx-body-file", self.tx_file,
                                 "--signing-key-file", self.env.wallet_sign_key,
                                 "--testnet-magic", self.env.magic,
                                 "--out-file", self.tx_signed_file)
+        success, message = run_command(command)
+        self.assertTrue(success, format_shell_error(command, message))
+        self.assertTrue(os.path.exists(self.tx_signed_file))
+
+        # submit
+        command = build_command(self.env.cardano_cli, "transaction", "submit",
+                                "--tx-file", self.tx_signed_file,
+                                "--testnet-magic", self.env.magic)
         success, message = run_command(command)
         self.assertTrue(success, format_shell_error(command, message))
         self.assertTrue(os.path.exists(self.tx_signed_file))

@@ -3,6 +3,10 @@ A toolkit for integration testing of smart contracts written in Plutus for the C
 
 This repository was started as part of the [Plutus Pioneer Capstone challenge #2](https://ucarecdn.com/8f27865c-f861-458e-bc97-ad13be9f3633/CardanoSummit2021_PlutusPioneerCapstone.pdf)
 
+For smart contract development it is especially important that the resulting code works correctly. To ensure this it is very helpful to run integration tests.
+They include compilation, building transactions, submitting transactions and checking if the result on the blockchain is as expected.
+This frameworks lets you write tests in python unittests and run them on the cardano blockchain.
+
 ## Overview
 :memo: Add 5m outline video
 Requirements: Linux, Mac or Windows setup to run bash and Python3 (for example WSL)
@@ -30,10 +34,10 @@ To test your own scripts instead of the examples, you can create a new test file
 
 ## Test cases
 - integration-toolkit/test-environment: checks whether your environment config looks correct and if the cli can query the testnet tip
-For each smart contract to test (examples for alwayssucceeds , :memo: are given)
+For each smart contract to test (an example for alwayssucceeds is given)
   - if the code builds
   - if the executable build
   - if the script address can be created
   - if the datum hash can be build
   - if the transaction can be build
-  
+  - if the transaction can be signed and submitted
