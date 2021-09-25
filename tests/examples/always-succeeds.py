@@ -3,6 +3,7 @@ import unittest
 
 from src.environment import TestkitEnvironment
 from src.shell_utils import *
+from src.utxo_selector import *
 
 
 class TestAlwaysSucceeds(unittest.TestCase):
@@ -24,6 +25,8 @@ class TestAlwaysSucceeds(unittest.TestCase):
         cls.parameters = "42"
 
         cls.script_address = cls.compiled_file + ".addr"
+        cls.tx_file = cls.compiled_file + ".tx"
+        cls.tx_signed_file = cls.compiled_file + ".tx.sign"
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -52,6 +55,29 @@ class TestAlwaysSucceeds(unittest.TestCase):
         success, message = run_command(command)
         self.assertTrue(success, format_shell_error(command, message))
         self.assertTrue(os.path.exists(self.script_address))
+
+    def test_tx_creation(self):
+        utxo = get_utxo_in_wallet(self.env)
+        query_pparams(self.env)
+        # create datum hash
+        command = build_command(self.env.cardano_cli, "transaction", "hash-script-data",
+                                "--script-data-value", 42)
+        success, script_datum_hash = run_command(command)
+        self.assertTrue(success, "Building script datum hash" + format_shell_error(command, script_datum_hash))
+        script_datum_hash = str(script_datum_hash).replace("\\n", "")[2:-1]
+
+        command = build_command(self.env.cardano_cli, "transaction", "build", "--alonzo-era",
+                                "--testnet-magic", self.env.magic,
+                                "--change-address", "$(cat " + self.env.wallet_payment_addr + ")",
+                                "--tx-in", utxo,
+                                "--tx-out", "$(cat " + self.script_address + ")" + "+1379280",
+                                "--tx-out-datum-hash", script_datum_hash,
+                                "--protocol-params-file", "pparams.json",
+                                "--out-file", self.tx_file)
+        success, message = run_command(command)
+        self.assertTrue(success, format_shell_error(command, message))
+        self.assertTrue(os.path.exists(self.script_address))
+
 
 
 if __name__ == '__main__':

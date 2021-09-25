@@ -8,6 +8,7 @@ class TestkitEnvironment:
 
     def __init__(self):
         self.__env = os.environ
+        self.repository_path = os.getcwd()
 
     @property
     def socket(self):
@@ -20,3 +21,11 @@ class TestkitEnvironment:
     @property
     def cardano_cli(self):
         return self.__env.get("CARDANO_CLI")
+
+    @property
+    def wallet_payment_addr(self):
+        return self.__env.get("WALLET_PAYMENT_ADDR")
+
+    @property
+    def wallet_sign_key(self):
+        return self.__env.get("WALLET_SIGN_KEY")

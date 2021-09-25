@@ -29,6 +29,14 @@ class TestEnvironmentSetup(unittest.TestCase):
         result = subprocess.check_output([self.env.cardano_cli, "query", "tip", "--testnet-magic", self.env.magic])
         self.assertTrue("slot" in str(result), "Cardano cli should be able to query the tip")
 
+    def test_wallet_setup(self):
+        self.assertTrue(os.path.exists(self.env.wallet_payment_addr),
+                        "The file containing your wallet address is needed")
+
+    def test_wallet_setup(self):
+        self.assertTrue(os.path.exists(self.env.wallet_sign_key),
+                        "The file containing your signing key is needed")
+
 
 if __name__ == '__main__':
     unittest.main()
